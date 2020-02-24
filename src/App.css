@@ -50,7 +50,8 @@ h1 {
   font-family: "Cookie-black", sans-serif;
   font-size: 3rem;
   text-align: left;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
+  margin-right: 1rem;
   display: inline-block;
   text-align: unset;
 }
@@ -58,7 +59,7 @@ h1 {
 .login-form-container,
 .signup-form-container {
   text-align: center;
-  width: 40rem;
+  width: 35rem;
   padding: 3rem;
   margin: 3rem auto;
   border: 1px solid var(--black);
@@ -76,21 +77,26 @@ input {
 .main-page {
   width: 90vw;
   text-align: center;
-  margin: 2rem auto;
+  margin: 4rem auto;
 }
 
 /* Components */
 .chatroom-container {
   width: 70%;
-  height: 60rem;
-  background-color: blue;
+  height: auto;
+  /* background-color: blue; */
   float: left;
+}
+.chat-messages {
+  overflow: auto;
+  height: 40rem;
 }
 
 .sidebar-container {
   width: 30%;
-  height: 60rem;
-  background-color: green;
+  height: auto;
+  /* background-color: green; */
+  box-shadow: 2px 3px 10px -2px var(--black);
   /* display: inline-block; */
   float: right;
 }
@@ -106,3 +112,18 @@ input {
   justify-content: center;
 
 */
+
+/* Message */
+.message {
+  padding: 0.5rem 2rem;
+  text-align: left;
+}
+
+.message-info {
+  font-family: "Cookie-regular", sans-serif;
+  color: var(--blue);
+}
+
+.me {
+  color: var(--yellow);
+}

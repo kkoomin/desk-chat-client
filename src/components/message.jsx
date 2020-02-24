@@ -2,7 +2,13 @@ import React from "react";
 
 class Message extends React.Component {
   render() {
-    return <div className="message"></div>;
+    const { data } = this.props;
+    return (
+      <div className="message">
+        <div className="message-info">{data.author.name}</div>
+        <div className="message-content"> {data.message}</div>
+      </div>
+    );
   }
 }
 

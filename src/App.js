@@ -21,10 +21,6 @@ class App extends React.Component {
     });
   };
 
-  submitLogin = () => {};
-
-  submitSignIn = () => {};
-
   render() {
     return (
       <div className="app">

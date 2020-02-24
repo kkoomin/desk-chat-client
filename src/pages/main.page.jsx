@@ -4,13 +4,16 @@ import API from "../API";
 import Sidebar from "../components/sidebar";
 import ChatRoom from "../components/chatroom";
 
-// import Cookies from "universal-cookie";
-// const cookies = new Cookies();
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 class MainPage extends React.Component {
-  state = {};
+  state = {
+    username: cookies.get("username"),
+    userId: cookies.get("userId")
+  };
 
-  componentDidMount() {}
+  // componentDidMount() {}
 
   render() {
     return (
@@ -25,8 +28,8 @@ class MainPage extends React.Component {
         >
           로그아웃
         </button>
-        <ChatRoom />
-        <Sidebar />
+        <ChatRoom username={this.state.username} userId={this.state.userId} />
+        <Sidebar username={this.state.username} />
       </div>
     );
   }

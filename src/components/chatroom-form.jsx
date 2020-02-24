@@ -1,5 +1,5 @@
 import React from "react";
-import API from "../API";
+// import API from "../API";
 
 class ChatRoomForm extends React.Component {
   state = {
@@ -14,10 +14,10 @@ class ChatRoomForm extends React.Component {
   };
 
   render() {
-    const roomData = {
-      username: this.state.username,
-      code: this.state.code
-    };
+    // const roomData = {
+    //   username: this.state.username,
+    //   code: this.state.code
+    // };
     return (
       <div className="signup-form-container">
         <h1>채팅룸 입장하기</h1>
