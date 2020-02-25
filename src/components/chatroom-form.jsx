@@ -3,7 +3,7 @@ import React from "react";
 
 class ChatRoomForm extends React.Component {
   state = {
-    username: "",
+    // username: "",
     code: ""
   };
 
@@ -26,21 +26,12 @@ class ChatRoomForm extends React.Component {
           //   onSubmit={e => API.submitRoom(e, roomData)}
           className="signup-form"
         >
-          <div className="signup-form_username">
-            <input
-              name="username"
-              placeholder="name"
-              onChange={this.handleChange}
-            />
-          </div>
-
-          <div className="signup-form_code">
-            <input
-              name="code"
-              placeholder="code"
-              onChange={this.handleChange}
-            />
-          </div>
+          <input
+            className="signup-form_code"
+            name="code"
+            placeholder="code"
+            onChange={this.handleChange}
+          />
 
           <button className="main-big-btn" type="submit">
             입장하기

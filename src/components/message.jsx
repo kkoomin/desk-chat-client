@@ -5,7 +5,9 @@ class Message extends React.Component {
     const { data } = this.props;
     return (
       <div className="message">
-        <div className="message-info">{data.author.name}</div>
+        <div className="message-info">
+          {data.name} <span>{data.createdAt}</span>
+        </div>
         <div className="message-content"> {data.message}</div>
       </div>
     );

@@ -124,6 +124,11 @@ input {
   color: var(--blue);
 }
 
+.message-info span {
+  color: var(--yellow);
+  font-size: 0.7rem;
+}
+
 .me {
   color: var(--yellow);
 }
