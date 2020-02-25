@@ -2,20 +2,31 @@ import React from "react";
 import Message from "./message";
 import API from "../API";
 import moment from "moment";
-import ChatRoomForm from "./chatroom-form";
 
 const io = require("socket.io-client");
 // const socket = io.connect("http://70.12.225.186:8080");
 const socket = io.connect("http://localhost:8080");
 
 class ChatRoom extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
 
     this.state = {
-      isEnterCode: false,
       messages: []
     };
+
+    // Socket Events
+    const roomData = {
+      username: props.username,
+      room: props.roomCode
+    };
+
+    socket.emit("JOIN", roomData, error => {
+      if (error) {
+        console.log(error);
+      }
+      // io.emit("SEND", "A new user has joined!");
+    });
 
     socket.on("RECEIVE", data => {
       console.log(data);
@@ -27,11 +38,11 @@ class ChatRoom extends React.Component {
   }
 
   componentDidMount() {
-    this.renderMessage();
+    this.renderMessage(this.props.roomId);
   }
 
-  renderMessage = async () => {
-    const DBdata = await API.getChats();
+  renderMessage = async roomId => {
+    const DBdata = await API.getChats(roomId);
     // console.log(DBdata);
     const chatData = DBdata.map(data => {
       return {
@@ -52,7 +63,12 @@ class ChatRoom extends React.Component {
     const createdAt = moment().format("YYYY-MM-DD HH:mm");
 
     const data = { name, message, createdAt };
-    const DBdata = { author: id, message, createdAt };
+    const DBdata = {
+      author: id,
+      message,
+      createdAt,
+      room_id: this.props.roomId
+    };
 
     socket.emit("SEND", data, error => {
       console.log("Got an error", error);
@@ -71,29 +87,22 @@ class ChatRoom extends React.Component {
   render() {
     return (
       <div className="chatroom-container">
-        {this.state.isEnterCode ? (
-          <>
-            <div className="chat-messages">
-              {this.state.messages.map(message => {
-                return <Message key={message._id} data={message} />;
-              })}
-            </div>
-
-            <form id="message-form" onSubmit={e => this.handleSubmit(e)}>
-              <input
-                name="message"
-                placeholder="Message"
-                required
-                autoComplete="off"
-              />
-              <button className="main-big-btn" type="submit">
-                Send
-              </button>
-            </form>
-          </>
-        ) : (
-          <ChatRoomForm />
-        )}
+        <div className="chat-messages">
+          {this.state.messages.map((message, index) => {
+            return <Message key={index} data={message} />;
+          })}
+        </div>
+        <form id="message-form" onSubmit={e => this.handleSubmit(e)}>
+          <input
+            name="message"
+            placeholder="Message"
+            required
+            autoComplete="off"
+          />
+          <button className="main-big-btn" type="submit">
+            Send
+          </button>
+        </form>
       </div>
     );
   }

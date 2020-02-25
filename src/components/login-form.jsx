@@ -4,29 +4,17 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 class LoginForm extends React.Component {
-  state = {
-    email: "",
-    password: ""
-  };
-
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  };
-
   render() {
-    const loginData = {
-      email: this.state.email,
-      password: this.state.password
-    };
     return (
       <div className="login-form-container">
         <h1>로그인하기</h1>
 
         <form
           onSubmit={e => {
-            API.submitLogin(e, loginData).then(() => {
+            API.submitLogin(e, {
+              email: this.login_email.value,
+              password: this.login_password.value
+            }).then(() => {
               if (cookies.get("username")) this.props.login();
             });
             e.target.elements.email.value = "";
@@ -38,7 +26,7 @@ class LoginForm extends React.Component {
             <input
               name="email"
               placeholder="Email"
-              onChange={this.handleChange}
+              ref={ref => (this.login_email = ref)}
             />
           </div>
           <div className="login-form_password">
@@ -46,7 +34,7 @@ class LoginForm extends React.Component {
               type="password"
               name="password"
               placeholder="Password"
-              onChange={this.handleChange}
+              ref={ref => (this.login_password = ref)}
             />
           </div>
 

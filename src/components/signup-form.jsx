@@ -2,37 +2,26 @@ import React from "react";
 import API from "../API";
 
 class SignUpForm extends React.Component {
-  state = {
-    email: "",
-    password: "",
-    name: ""
-  };
-
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  };
-
   render() {
-    const signUpData = {
-      email: this.state.email,
-      password: this.state.password,
-      name: this.state.name
-    };
     return (
       <div className="signup-form-container">
         <h1>회원가입하기</h1>
 
         <form
-          onSubmit={e => API.submitSignUp(e, signUpData)}
+          onSubmit={e =>
+            API.submitSignUp(e, {
+              email: this.signup_email.value,
+              password: this.signup_password.value,
+              name: this.signup_name.value
+            })
+          }
           className="signup-form"
         >
           <div className="signup-form_email">
             <input
               name="email"
               placeholder="Email"
-              onChange={this.handleChange}
+              ref={ref => (this.signup_email = ref)}
             />
           </div>
           <div className="signup-form_password">
@@ -40,14 +29,14 @@ class SignUpForm extends React.Component {
               name="password"
               type="password"
               placeholder="Password"
-              onChange={this.handleChange}
+              ref={ref => (this.signup_password = ref)}
             />
           </div>
           <div className="signup-form_name">
             <input
               name="name"
               placeholder="Name"
-              onChange={this.handleChange}
+              ref={ref => (this.signup_name = ref)}
             />
           </div>
 

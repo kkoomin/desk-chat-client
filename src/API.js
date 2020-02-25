@@ -4,6 +4,9 @@ const cookies = new Cookies();
 // const url = "http://70.12.225.186:8080";
 const url = "http://localhost:8080";
 
+/*
+ * USER
+ */
 const submitLogin = (e, data) => {
   e.preventDefault();
   const options = {
@@ -49,8 +52,15 @@ const logout = e => {
   e.preventDefault();
   cookies.remove("username");
   cookies.remove("userId");
+  cookies.remove("roomCode");
+  cookies.remove("roomTitle");
 };
 
+const getRoomUsers = () => {};
+
+/*
+ * CHAT
+ */
 const addChat = (e, data) => {
   e.preventDefault();
   const options = {
@@ -65,16 +75,59 @@ const addChat = (e, data) => {
   return fetch(`${url}/chat/addChat`, options);
 };
 
-const getChats = () => {
-  return fetch(`${url}/chat/getChats`)
+const getChats = room_id => {
+  const options = {
+    method: "POST",
+    // credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({ room_id })
+  };
+  return fetch(`${url}/chat/getChats`, options)
     .then(res => res.json())
     .then(json => json.chats);
+};
+
+/*
+ * ROOM
+ */
+const getRoom = (e, roomData) => {
+  e.preventDefault();
+  const options = {
+    method: "POST",
+    // credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({ roomData })
+  };
+  return fetch(`${url}/room/getRoom`, options).then(res => res.json());
+};
+
+const updateUserRoom = (userId, roomId) => {
+  //   e.preventDefault();
+  const options = {
+    method: "POST",
+    // credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({ userId, roomId })
+  };
+  return fetch(`${url}/user/updateUserRoom`, options).then(res => res.json());
 };
 
 export default {
   submitLogin,
   submitSignUp,
   logout,
+  getRoomUsers,
   addChat,
-  getChats
+  getChats,
+  getRoom,
+  updateUserRoom
 };
