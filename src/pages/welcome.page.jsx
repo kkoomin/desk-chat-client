@@ -25,7 +25,10 @@ class WelcomePage extends React.Component {
         {this.props.isLoggedIn ? (
           <ChatRoomForm />
         ) : this.state.isLoginFormOpened ? (
-          <LoginForm toggleForm={this.toggleForm} login={this.props.login} />
+          <LoginForm
+            toggleForm={this.toggleForm}
+            toggleLogin={this.props.toggleLogin}
+          />
         ) : (
           <SignUpForm toggleForm={this.toggleForm} />
         )}

@@ -16,9 +16,8 @@ class ChatRoomForm extends React.Component {
 
   handleSubmit = json => {
     if (json.status) {
-      API.updateUserRoom(this.props.userId, json.room._id);
-      console.log(json.room);
-      cookies.set("roomCode", json.room.code, { path: "/" });
+      // API.updateUserRoom(this.props.userId, json.room._id);
+      cookies.set("roomCode", json.room.code * 1, { path: "/" });
       cookies.set("roomId", json.room._id, { path: "/" });
       this.props.enterRoom(json.room);
     } else {

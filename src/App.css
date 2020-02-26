@@ -33,6 +33,11 @@ input {
   display: block;
 }
 
+ul,
+li {
+  all: unset;
+}
+
 /* Buttons */
 .main-big-btn {
   /* all: unset; */
@@ -155,6 +160,7 @@ input {
 
 .sidebar-container {
   width: 30%;
+  min-height: 20rem;
   height: auto;
   /* background-color: green; */
   box-shadow: 2px 3px 10px -2px var(--black);
@@ -162,22 +168,46 @@ input {
   float: right;
 }
 
-.logout-btn {
-  display: inline-block;
-}
-/* 
-// Centered
+.list-user {
+  display: block;
+  height: 2.5rem;
+  width: 50%;
+  text-align: center;
+  /* Vertically Centered */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  /* ------------------ */
+  font-family: "Cookie-regular", sans-serif;
+  background-color: var(--blue);
+  color: var(--bg-color);
+  margin: 0.2rem auto;
+}
 
-*/
+.users {
+  display: block;
+  min-height: 13rem;
+  height: auto;
+}
+
+/* .room-exit {
+  position: sticky;
+  bottom: 0;
+} */
+
+.logout-btn {
+  display: inline-block;
+}
 
 /* Message */
 .message {
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 5rem;
   text-align: left;
+}
+
+.right {
+  text-align: right;
 }
 
 .message-info {

@@ -9,7 +9,7 @@ class LoginForm extends React.Component {
       email: this.login_email.value,
       password: this.login_password.value
     }).then(() => {
-      if (cookies.get("username")) this.props.login();
+      if (cookies.get("username")) this.props.toggleLogin();
     });
     e.target.elements.email.value = "";
     e.target.elements.password.value = "";

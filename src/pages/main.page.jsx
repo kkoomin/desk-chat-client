@@ -12,62 +12,54 @@ const cookies = new Cookies();
 // Socket Client-Side Connection //
 const io = require("socket.io-client");
 // const socket = io.connect("http://70.12.225.186:8080");
-const socket = io.connect("http://localhost:8080");
+const socket = io.connect("http://localhost:8080", {
+  transports: ["websocket"]
+});
 
 class MainPage extends React.Component {
   constructor() {
     super();
+
     this.state = {
       isCodeEntered: false,
       username: cookies.get("username"),
       userId: cookies.get("userId"),
-      roomCode: cookies.get("roomCode"),
+      roomCode: cookies.get("roomCode") * 1,
       roomId: cookies.get("roomId"),
       users: [],
       messages: []
     };
+  }
 
-    // Socket Events
-    const roomData = {
-      username: this.state.username,
-      roomCode: this.state.roomCode
-    };
+  componentDidMount() {
+    if (cookies.get("roomCode") && cookies.get("roomId")) {
+      this.setState({ isCodeEntered: true });
+    }
+    // this.setState({ isCodeEntered: true }, () => {
+    //   API.getRoomUsers(this.state.roomId).then(json => {
+    //     this.setState({
+    //       users: json.users
+    //     });
+    //   });
+    // });
 
-    socket.emit("JOIN", roomData, error => {
-      if (error) {
-        console.log(error);
-      }
-      // io.emit("SEND", "A new user has joined!");
-    });
+    // 새로고침 후 socket id가 변경되어 disconnect 되고 방에서 나가졌을 경우
+    // if (this.state.users.filter(user => user.name === this.state.username).length === 0) {
 
+    // }
+    // 메세지 수신
     socket.on("RECEIVE", data => {
-      console.log(data);
+      // console.log(data);
       //  data : {name: "abc", message: "ㅎ", createdAt: "2020-02-25 19:37"}
       this.setState({
         messages: [...this.state.messages, data]
       });
     });
 
-    socket.on("ROOMUSERS", () => {
-      this.updateRoomUser();
+    // 채팅방의 유저목록 불러오기
+    socket.on("ROOMUSERS", userArray => {
+      this.updateRoomUser(userArray);
     });
-  }
-
-  componentDidMount() {
-    if (cookies.get("roomCode") && cookies.get("roomId")) {
-      this.setState(
-        {
-          isCodeEntered: true
-        },
-        () => {
-          API.getRoomUsers(this.state.roomId).then(json => {
-            this.setState({
-              users: json.users
-            });
-          });
-        }
-      );
-    }
   }
 
   sendMessage = (e, id, name) => {
@@ -75,7 +67,12 @@ class MainPage extends React.Component {
     const message = e.target.elements.message.value;
     const createdAt = moment().format("YYYY-MM-DD HH:mm");
 
-    const data = { name, message, createdAt, room: this.roomCode };
+    const data = {
+      name,
+      message,
+      createdAt,
+      roomCode: this.state.roomCode
+    };
     const DBdata = {
       author: id,
       message,
@@ -83,9 +80,8 @@ class MainPage extends React.Component {
       room_id: this.state.roomId
     };
 
-    socket.emit("SEND", data, error => {
-      console.log("Got an error", error);
-    });
+    socket.emit("SEND", data);
+
     API.addChat(e, DBdata);
   };
 
@@ -105,22 +101,51 @@ class MainPage extends React.Component {
     });
   };
 
-  updateRoomUser = () => {
-    API.getRoomUsers(this.state.roomId).then(json => {
-      console.log(json.users);
-      this.setState({
-        users: json.users
-      });
+  updateRoomUser = userArray => {
+    this.setState({
+      users: userArray
     });
+    // API.getRoomUsers(this.state.roomId).then(json => {
+    //   this.setState({
+    //     users: json.users
+    //   });
+    // });
   };
 
   //{_id: "5e5519f538a16283437f29ec", title: "room1", code: 1234, createdAt: "2020-02-25T12:58:29.872Z", __v: 0}
   enterRoom = roomData => {
-    console.log(roomData);
+    // console.log(roomData);
+    this.setState(
+      {
+        roomCode: roomData.code,
+        roomId: roomData._id,
+        isCodeEntered: !this.state.isCodeEntered
+      },
+      () => {
+        const username = this.state.username;
+        const roomCode = this.state.roomCode;
+
+        socket.emit("JOIN", { username, roomCode }, error => {
+          if (error) {
+            console.log(error);
+          }
+          io.emit("SEND", "A new user has joined!");
+        });
+      }
+    );
+  };
+
+  exitRoom = roomCode => {
+    // alert();
+    socket.emit("EXIT", roomCode);
+    socket.close();
+    API.exitRoom(this.state.userId);
+    cookies.remove("roomCode");
+    cookies.remove("roomId");
     this.setState({
-      roomCode: roomData.code,
-      roomId: roomData._id,
-      isCodeEntered: !this.state.isCodeEntered
+      isCodeEntered: false,
+      roomId: null,
+      roomCode: null
     });
   };
 
@@ -142,7 +167,7 @@ class MainPage extends React.Component {
           onClick={e => {
             API.exitRoom(this.state.userId);
             API.logout(e);
-            this.props.login();
+            this.props.toggleLogin();
           }}
         >
           로그아웃
@@ -156,12 +181,16 @@ class MainPage extends React.Component {
               roomCode={roomCode}
               roomId={roomId}
               isCodeEntered={isCodeEntered}
-              updateRoomUser={this.updateRoomUser}
               sendMessage={this.sendMessage}
               renderMessage={this.renderMessage}
               messages={messages}
             />
-            <Sidebar username={username} roomCode={roomCode} users={users} />
+            <Sidebar
+              username={username}
+              roomCode={roomCode}
+              users={users}
+              exitRoom={this.exitRoom}
+            />
           </>
         ) : (
           <ChatRoomForm userId={userId} enterRoom={this.enterRoom} />

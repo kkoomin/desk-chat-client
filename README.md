@@ -15,6 +15,7 @@
 
 - 유저가 방에 입장할 때 방 번호 유저 디비에 저장
 - 방 번호가 같은 유저들 리스트 랜더링
+- 내가 쓴 메세지는 오른쪽 정렬로 보이게 하기
 
 #### 아직 구현이 덜 된 기능
 
@@ -22,7 +23,8 @@
 - 어드민 계정 만들고 어드민으로 유저 입장, 퇴장 시 환영 메세지 보내기
 - 채팅이 쌓였을 경우 채팅창 하단으로 auto scroll 기능
 - 로그아웃 하지 않고 채팅방만 나가는 기능
-- 내가 쓴 메세지는 오른쪽 정렬로 보이게 하기
+
+- 로그인 됐을 때만 소켓을 연결하도록 다시 설정하기
 
 ## What I learnt
 
@@ -38,3 +40,15 @@
 - Back-end: Express.js, NodeJS
 - Database: MongoDB
 - Libraries: Moment.js, Universal-cookie, Mongoose, Socket.io
+
+<!--
+Server -> Client
+
+socket.emit() : Sends event to specific client
+io.emit(): Sends every connected client
+socket.broadcast.emit(): Send to every connected client except socket client itself
+
+
+io.to(room).emit(): to sends everybody in specific room
+socket.broadcast.to(room).emit(): same function as above but limited to specific room
+-->

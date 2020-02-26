@@ -12,10 +12,10 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    if (cookies.get("username")) this.login();
+    if (cookies.get("username")) this.setState({ isLoggedIn: true });
   }
 
-  login = () => {
+  toggleLogin = () => {
     this.setState({
       isLoggedIn: !this.state.isLoggedIn
     });
@@ -25,10 +25,10 @@ class App extends React.Component {
     return (
       <div className="app">
         {this.state.isLoggedIn ? (
-          <MainPage login={this.login} />
+          <MainPage toggleLogin={this.toggleLogin} />
         ) : (
           <WelcomePage
-            login={this.login}
+            toggleLogin={this.toggleLogin}
             isLoggedIn={this.state.isLoggedIn}
             submitLogin={this.submitLogin}
           />

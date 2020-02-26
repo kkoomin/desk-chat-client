@@ -22,7 +22,7 @@ const submitLogin = (e, data) => {
     .then(res => res.json())
     .then(json => {
       if (json.status) {
-        console.log(json.message);
+        // console.log(json.message);
         cookies.set("username", json.message[0].name, { path: "/" });
         cookies.set("userId", json.message[0]._id, { path: "/" });
       } else {
@@ -53,7 +53,7 @@ const logout = e => {
   cookies.remove("username");
   cookies.remove("userId");
   cookies.remove("roomCode");
-  cookies.remove("roomTitle");
+  cookies.remove("roomId");
 };
 
 const exitRoom = userId => {
@@ -109,41 +109,41 @@ const getRoom = (e, roomData) => {
   return fetch(`${url}/room/getRoom`, options).then(res => res.json());
 };
 
-const updateUserRoom = (userId, roomId) => {
-  //   e.preventDefault();
-  const options = {
-    method: "POST",
-    // credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json"
-    },
-    body: JSON.stringify({ userId, roomId })
-  };
-  return fetch(`${url}/user/updateUserRoom`, options).then(res => res.json());
-};
+// const updateUserRoom = (userId, roomId) => {
+//   //   e.preventDefault();
+//   const options = {
+//     method: "POST",
+//     // credentials: "include",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Accept: "application/json"
+//     },
+//     body: JSON.stringify({ userId, roomId })
+//   };
+//   return fetch(`${url}/user/updateUserRoom`, options).then(res => res.json());
+// };
 
-const getRoomUsers = roomId => {
-  const options = {
-    method: "POST",
-    // credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json"
-    },
-    body: JSON.stringify({ roomId })
-  };
-  return fetch(`${url}/user/getRoomUsers`, options).then(res => res.json());
-};
+// const getRoomUsers = roomId => {
+//   const options = {
+//     method: "POST",
+//     // credentials: "include",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Accept: "application/json"
+//     },
+//     body: JSON.stringify({ roomId })
+//   };
+//   return fetch(`${url}/user/getRoomUsers`, options).then(res => res.json());
+// };
 
 export default {
   submitLogin,
   submitSignUp,
   logout,
   exitRoom,
-  getRoomUsers,
+  //   getRoomUsers,
   addChat,
   getChats,
-  getRoom,
-  updateUserRoom
+  getRoom
+  //   updateUserRoom
 };

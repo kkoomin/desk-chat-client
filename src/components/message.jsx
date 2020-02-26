@@ -2,9 +2,9 @@ import React from "react";
 
 class Message extends React.Component {
   render() {
-    const { data } = this.props;
+    const { data, username } = this.props;
     return (
-      <div className="message">
+      <div className={data.name === username ? "message right" : "message"}>
         <div className="message-info">
           {data.name} <span>{data.createdAt}</span>
         </div>

@@ -19,7 +19,13 @@ class ChatRoom extends React.Component {
       <div className="chatroom-container">
         <div className="chat-messages">
           {this.props.messages.map((message, index) => {
-            return <Message key={index} data={message} />;
+            return (
+              <Message
+                key={index}
+                data={message}
+                username={this.props.username}
+              />
+            );
           })}
         </div>
         <form id="message-form" onSubmit={e => this.handleSubmit(e)}>
