@@ -56,7 +56,9 @@ const logout = e => {
   cookies.remove("roomTitle");
 };
 
-const getRoomUsers = () => {};
+const exitRoom = userId => {
+  return fetch(`${url}/user/${userId}`);
+};
 
 /*
  * CHAT
@@ -121,10 +123,24 @@ const updateUserRoom = (userId, roomId) => {
   return fetch(`${url}/user/updateUserRoom`, options).then(res => res.json());
 };
 
+const getRoomUsers = roomId => {
+  const options = {
+    method: "POST",
+    // credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({ roomId })
+  };
+  return fetch(`${url}/user/getRoomUsers`, options).then(res => res.json());
+};
+
 export default {
   submitLogin,
   submitSignUp,
   logout,
+  exitRoom,
   getRoomUsers,
   addChat,
   getChats,

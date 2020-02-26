@@ -2,26 +2,29 @@ import React from "react";
 import API from "../API";
 
 class SignUpForm extends React.Component {
+  handleSubmit = e => {
+    API.submitSignUp(e, {
+      email: this.signup_email.value,
+      password: this.signup_password.value,
+      name: this.signup_name.value
+    });
+    this.signup_email.value = "";
+    this.signup_password.value = "";
+    this.signup_name.value = "";
+  };
+
   render() {
     return (
       <div className="signup-form-container">
         <h1>회원가입하기</h1>
 
-        <form
-          onSubmit={e =>
-            API.submitSignUp(e, {
-              email: this.signup_email.value,
-              password: this.signup_password.value,
-              name: this.signup_name.value
-            })
-          }
-          className="signup-form"
-        >
+        <form onSubmit={this.handleSubmit} className="signup-form">
           <div className="signup-form_email">
             <input
               name="email"
               placeholder="Email"
               ref={ref => (this.signup_email = ref)}
+              autoFocus
             />
           </div>
           <div className="signup-form_password">
@@ -45,7 +48,10 @@ class SignUpForm extends React.Component {
           </button>
         </form>
 
-        <button className="main-big-btn" onClick={this.props.toggleForm}>
+        <button
+          className="main-big-btn bg-yellow"
+          onClick={this.props.toggleForm}
+        >
           로그인 할래?
         </button>
       </div>

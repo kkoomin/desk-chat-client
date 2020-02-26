@@ -1,5 +1,7 @@
 import React from "react";
 import API from "../API";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 class ChatRoomForm extends React.Component {
   state = {
@@ -15,6 +17,9 @@ class ChatRoomForm extends React.Component {
   handleSubmit = json => {
     if (json.status) {
       API.updateUserRoom(this.props.userId, json.room._id);
+      console.log(json.room);
+      cookies.set("roomCode", json.room.code, { path: "/" });
+      cookies.set("roomId", json.room._id, { path: "/" });
       this.props.enterRoom(json.room);
     } else {
       alert(json.message);
@@ -46,13 +51,17 @@ class ChatRoomForm extends React.Component {
                 min="1000"
                 max="9999"
                 required
+                autoFocus
               />
 
               <button className="main-big-btn" type="submit">
                 입장하기
               </button>
             </form>
-            <button className="main-big-btn" onClick={this.toggleEnterForm}>
+            <button
+              className="main-big-btn bg-yellow"
+              onClick={this.toggleEnterForm}
+            >
               방 만들기
             </button>
           </>
@@ -74,11 +83,12 @@ class ChatRoomForm extends React.Component {
                 placeholder="Room Title"
                 ref={ref => (this.room_title = ref)}
                 required
+                autoFocus
               />
               <input
                 type="number"
                 name="code"
-                placeholder="code"
+                placeholder="Code"
                 ref={ref => (this.room_code = ref)}
                 min="1000"
                 max="9999"
@@ -89,8 +99,11 @@ class ChatRoomForm extends React.Component {
                 만들고 입장하기
               </button>
             </form>
-            <button className="main-big-btn" onClick={this.toggleEnterForm}>
-              방 코드로 입장하기
+            <button
+              className="main-big-btn bg-yellow"
+              onClick={this.toggleEnterForm}
+            >
+              코드로 입장하기
             </button>
           </>
         )}

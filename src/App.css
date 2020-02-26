@@ -24,6 +24,15 @@ h1 {
   font-family: "Cookie-black", sans-serif;
 }
 
+input {
+  width: 25rem;
+  height: 1rem;
+  padding: 0.5rem;
+  margin: 0.2rem auto;
+  font-size: 1rem;
+  display: block;
+}
+
 /* Buttons */
 .main-big-btn {
   /* all: unset; */
@@ -38,12 +47,59 @@ h1 {
   margin: 0.2rem;
 }
 
+.bg-yellow {
+  background-color: var(--yellow);
+}
+
+.bg-red {
+  background-color: var(--red);
+}
+
+/* Effect */
+/* https://www.codesdope.com/blog/article/12-creative-css-and-javascript-text-typing-animati/ */
+.typing {
+  border-right: solid 3px var(--blue);
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0 auto;
+  animation: animated-text 4s steps(29, end) 1s 1 normal both,
+    animated-cursor 600ms steps(29, end) infinite;
+}
+
+@keyframes animated-text {
+  from {
+    width: 0;
+  }
+  to {
+    width: 45%;
+  }
+}
+@keyframes animated-cursor {
+  from {
+    border-right-color: var(--blue);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
+
 /* Welcome Page */
+
+.welcome-page {
+  margin: 4rem auto;
+}
 
 .welcome-title {
   font-family: "Cookie-black", sans-serif;
   font-size: 4rem;
   text-align: center;
+}
+
+.welcome-desc {
+  font-family: "Cookie-regular", sans-serif;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 1rem;
 }
 
 .main-title {
@@ -62,15 +118,14 @@ h1 {
   width: 35rem;
   padding: 3rem;
   margin: 3rem auto;
-  border: 1px solid var(--black);
+  /* border: 1px solid var(--black); */
+  box-shadow: 2px 3px 10px -2px var(--black);
 }
 
-input {
-  width: 30rem;
-  height: 1rem;
-  padding: 0.5rem;
-  margin: 0.2rem auto;
-  font-size: 1rem;
+.welcome-footer {
+  font-family: "Cookie-regular", sans-serif;
+  text-align: center;
+  color: var(--black);
 }
 
 /* Main Page */
@@ -87,9 +142,15 @@ input {
   /* background-color: blue; */
   float: left;
 }
+
 .chat-messages {
   overflow: auto;
   height: 40rem;
+}
+
+#chat-message_input {
+  width: 40rem;
+  display: inline-block;
 }
 
 .sidebar-container {
