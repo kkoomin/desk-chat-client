@@ -11,9 +11,9 @@ const cookies = new Cookies();
 
 // Socket Client-Side Connection //
 const io = require("socket.io-client");
-// const socket = io.connect("http://70.12.225.186:8080");
 const socket = io.connect("http://localhost:8080", {
-  transports: ["websocket"]
+  transports: ["websocket"],
+  autoConnect: false
 });
 
 class MainPage extends React.Component {
@@ -31,32 +31,21 @@ class MainPage extends React.Component {
     };
   }
 
+  UNSAFE_componentWillMount() {
+    // If a user reload the page, the socket connection will be gone and the user automatically exit the chat room.
+    this.exitRoom();
+  }
+
   componentDidMount() {
     if (cookies.get("roomCode") && cookies.get("roomId")) {
       this.setState({ isCodeEntered: true });
     }
-    // this.setState({ isCodeEntered: true }, () => {
-    //   API.getRoomUsers(this.state.roomId).then(json => {
-    //     this.setState({
-    //       users: json.users
-    //     });
-    //   });
-    // });
 
-    // 새로고침 후 socket id가 변경되어 disconnect 되고 방에서 나가졌을 경우
-    // if (this.state.users.filter(user => user.name === this.state.username).length === 0) {
-
-    // }
-    // 메세지 수신
     socket.on("RECEIVE", data => {
-      // console.log(data);
-      //  data : {name: "abc", message: "ㅎ", createdAt: "2020-02-25 19:37"}
       this.setState({
         messages: [...this.state.messages, data]
       });
     });
-
-    // 채팅방의 유저목록 불러오기
     socket.on("ROOMUSERS", userArray => {
       this.updateRoomUser(userArray);
     });
@@ -87,7 +76,6 @@ class MainPage extends React.Component {
 
   renderMessage = async roomId => {
     const DBdata = await API.getChats(roomId);
-    // console.log(DBdata);
     const chatData = DBdata.map(data => {
       return {
         _id: data._id,
@@ -105,16 +93,9 @@ class MainPage extends React.Component {
     this.setState({
       users: userArray
     });
-    // API.getRoomUsers(this.state.roomId).then(json => {
-    //   this.setState({
-    //     users: json.users
-    //   });
-    // });
   };
 
-  //{_id: "5e5519f538a16283437f29ec", title: "room1", code: 1234, createdAt: "2020-02-25T12:58:29.872Z", __v: 0}
   enterRoom = roomData => {
-    // console.log(roomData);
     this.setState(
       {
         roomCode: roomData.code,
@@ -125,6 +106,7 @@ class MainPage extends React.Component {
         const username = this.state.username;
         const roomCode = this.state.roomCode;
 
+        socket.open();
         socket.emit("JOIN", { username, roomCode }, error => {
           if (error) {
             console.log(error);
@@ -136,10 +118,8 @@ class MainPage extends React.Component {
   };
 
   exitRoom = roomCode => {
-    // alert();
     socket.emit("EXIT", roomCode);
     socket.close();
-    API.exitRoom(this.state.userId);
     cookies.remove("roomCode");
     cookies.remove("roomId");
     this.setState({
@@ -165,7 +145,7 @@ class MainPage extends React.Component {
         <button
           className="logout-btn main-big-btn"
           onClick={e => {
-            API.exitRoom(this.state.userId);
+            this.exitRoom(this.state.roomCode);
             API.logout(e);
             this.props.toggleLogin();
           }}

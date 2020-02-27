@@ -9,7 +9,6 @@ class ChatRoom extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.sendMessage(e, this.props.userId, this.props.username);
-    // this.renderMessage();
     e.target.elements.message.value = "";
     e.target.elements.message.focus();
   };
