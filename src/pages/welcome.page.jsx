@@ -1,7 +1,6 @@
 import React from "react";
 import LoginForm from "../components/login-form";
 import SignUpForm from "../components/signup-form";
-import ChatRoomForm from "../components/chatroom-form";
 import Footer from "../components/footer";
 
 class WelcomePage extends React.Component {
@@ -23,9 +22,7 @@ class WelcomePage extends React.Component {
           한때 수업시간에 책상 서랍 안에서 핸드폰 자판 좀 쳐보신 분들,
           환영합니다.
         </div>
-        {this.props.isLoggedIn ? (
-          <ChatRoomForm />
-        ) : this.state.isLoginFormOpened ? (
+        {this.state.isLoginFormOpened ? (
           <LoginForm
             toggleForm={this.toggleForm}
             toggleLogin={this.props.toggleLogin}
