@@ -2,6 +2,7 @@ import React from "react";
 import LoginForm from "../components/login-form";
 import SignUpForm from "../components/signup-form";
 import ChatRoomForm from "../components/chatroom-form";
+import Footer from "../components/footer";
 
 class WelcomePage extends React.Component {
   state = {
@@ -32,7 +33,7 @@ class WelcomePage extends React.Component {
         ) : (
           <SignUpForm toggleForm={this.toggleForm} />
         )}
-        <div className="welcome-footer">©2020 kkoomin :D</div>
+        <Footer />
       </div>
     );
   }

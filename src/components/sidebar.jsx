@@ -1,11 +1,23 @@
 import React from "react";
 import User from "./user";
+import API from "../API";
 
 class Sidebar extends React.Component {
+  state = {
+    title: ""
+  };
+
+  async componentDidMount() {
+    this.setState({
+      title: await API.getRoomTitle(this.props.roomCode)
+    });
+  }
+
   render() {
     return (
       <div className="sidebar-container">
-        <h3 className="room-code">Room Code: {this.props.roomCode}</h3>
+        <div className="room-title">{this.state.title}</div>
+        <div className="room-code">Room Code: {this.props.roomCode}</div>
         <ul className="users">
           {this.props.users.map(user => (
             <User key={user.id} user={user} />

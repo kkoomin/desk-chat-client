@@ -18,6 +18,7 @@
 body {
   height: 100vh;
   background-color: var(--bg-color);
+  color: var(--black);
 }
 
 h1 {
@@ -49,7 +50,7 @@ li {
   font-family: "Cookie-regular", sans-serif;
   color: var(--bg-color);
   border-radius: 10px;
-  margin: 0.2rem;
+  margin: 0.3rem;
 }
 
 .bg-yellow {
@@ -140,7 +141,16 @@ li {
   margin: 4rem auto;
 }
 
-/* Components */
+.logout-btn {
+  display: inline-block;
+}
+
+/* Chatroom */
+.chatroom-wrapper {
+  width: 80%;
+  margin: auto;
+}
+
 .chatroom-container {
   width: 70%;
   height: auto;
@@ -154,10 +164,11 @@ li {
 }
 
 #chat-message_input {
-  width: 40rem;
+  width: 35rem;
   display: inline-block;
 }
 
+/* SideBar */
 .sidebar-container {
   width: 30%;
   min-height: 20rem;
@@ -185,19 +196,22 @@ li {
   margin: 0.2rem auto;
 }
 
+.room-title {
+  font-family: "Cookie-black", sans-serif;
+  margin: 1rem auto;
+  font-size: 2rem;
+}
+.room-code {
+  font-family: "Cookie-regular", sans-serif;
+  margin: 1rem auto;
+}
 .users {
   display: block;
   min-height: 13rem;
   height: auto;
 }
-
-/* .room-exit {
-  position: sticky;
-  bottom: 0;
-} */
-
-.logout-btn {
-  display: inline-block;
+.room-exit {
+  margin-bottom: 1rem;
 }
 
 /* Message */

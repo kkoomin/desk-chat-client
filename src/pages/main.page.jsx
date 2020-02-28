@@ -4,9 +4,11 @@ import API from "../API";
 import Sidebar from "../components/sidebar";
 import ChatRoom from "../components/chatroom";
 import ChatRoomForm from "../components/chatroom-form";
+import Footer from "../components/footer";
 
 import moment from "moment";
 import Cookies from "universal-cookie";
+import UserInfo from "../components/userInfo";
 const cookies = new Cookies();
 
 // Socket Client-Side Connection //
@@ -22,6 +24,7 @@ class MainPage extends React.Component {
 
     this.state = {
       isCodeEntered: false,
+      isUserInfoOpened: false,
       username: cookies.get("username"),
       userId: cookies.get("userId"),
       roomCode: cookies.get("roomCode") * 1,
@@ -129,6 +132,18 @@ class MainPage extends React.Component {
     });
   };
 
+  handleLogout = e => {
+    this.exitRoom(this.state.roomCode);
+    API.logout(e);
+    this.props.toggleLogin();
+  };
+
+  handleUserInfo = () => {
+    this.setState({
+      isUserInfoOpened: !this.state.isUserInfoOpened
+    });
+  };
+
   render() {
     const {
       username,
@@ -136,6 +151,7 @@ class MainPage extends React.Component {
       roomCode,
       roomId,
       isCodeEntered,
+      isUserInfoOpened,
       users,
       messages
     } = this.state;
@@ -143,37 +159,53 @@ class MainPage extends React.Component {
       <div className="main-page">
         <div className="main-title">책상 밑의 핸드폰</div>
         <button
+          className="userInfo-btn main-big-btn"
+          onClick={e => this.handleUserInfo(e)}
+        >
+          내 정보수정
+        </button>
+        <button
           className="logout-btn main-big-btn"
-          onClick={e => {
-            this.exitRoom(this.state.roomCode);
-            API.logout(e);
-            this.props.toggleLogin();
-          }}
+          onClick={e => this.handleLogout(e)}
         >
           로그아웃
         </button>
 
-        {isCodeEntered ? (
-          <>
-            <ChatRoom
-              username={username}
-              userId={userId}
-              roomCode={roomCode}
-              roomId={roomId}
-              isCodeEntered={isCodeEntered}
-              sendMessage={this.sendMessage}
-              renderMessage={this.renderMessage}
-              messages={messages}
-            />
-            <Sidebar
-              username={username}
-              roomCode={roomCode}
-              users={users}
-              exitRoom={this.exitRoom}
-            />
-          </>
+        {isUserInfoOpened ? (
+          <UserInfo
+            userId={userId}
+            username={username}
+            handleLogout={this.handleLogout}
+            handleUserInfo={this.handleUserInfo}
+          />
         ) : (
-          <ChatRoomForm userId={userId} enterRoom={this.enterRoom} />
+          <>
+            {isCodeEntered ? (
+              <div className="chatroom-wrapper">
+                <ChatRoom
+                  username={username}
+                  userId={userId}
+                  roomCode={roomCode}
+                  roomId={roomId}
+                  isCodeEntered={isCodeEntered}
+                  sendMessage={this.sendMessage}
+                  renderMessage={this.renderMessage}
+                  messages={messages}
+                />
+                <Sidebar
+                  username={username}
+                  roomCode={roomCode}
+                  users={users}
+                  exitRoom={this.exitRoom}
+                />
+              </div>
+            ) : (
+              <>
+                <ChatRoomForm userId={userId} enterRoom={this.enterRoom} />
+                <Footer />
+              </>
+            )}
+          </>
         )}
       </div>
     );

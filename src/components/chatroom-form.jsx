@@ -5,7 +5,7 @@ const cookies = new Cookies();
 
 class ChatRoomForm extends React.Component {
   state = {
-    isEnterForm: false
+    isEnterForm: true
   };
 
   toggleEnterForm = () => {
@@ -44,7 +44,7 @@ class ChatRoomForm extends React.Component {
                 type="number"
                 className="signup-form_code"
                 name="code"
-                placeholder="code"
+                placeholder="Room Code"
                 ref={ref => (this.room_code = ref)}
                 min="1000"
                 max="9999"
@@ -86,7 +86,7 @@ class ChatRoomForm extends React.Component {
               <input
                 type="number"
                 name="code"
-                placeholder="Code"
+                placeholder="Room Code"
                 ref={ref => (this.room_code = ref)}
                 min="1000"
                 max="9999"
