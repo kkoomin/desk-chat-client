@@ -168,6 +168,10 @@ li {
   display: inline-block;
 }
 
+#message-form {
+  position: fixed;
+  top: 50rem;
+}
 /* SideBar */
 .sidebar-container {
   width: 30%;

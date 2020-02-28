@@ -4,7 +4,16 @@ import Message from "./message";
 class ChatRoom extends React.Component {
   componentDidMount() {
     this.props.renderMessage(this.props.roomId);
+    this.scrollToBottom();
   }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    this.messagesBottom.scrollIntoView();
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -26,20 +35,27 @@ class ChatRoom extends React.Component {
               />
             );
           })}
+          <div
+            ref={ref => {
+              this.messagesBottom = ref;
+            }}
+          ></div>
+          <div id="message-form">
+            <form onSubmit={e => this.handleSubmit(e)}>
+              <input
+                id="chat-message_input"
+                name="message"
+                placeholder="Message"
+                required
+                autoComplete="off"
+                autoFocus
+              />
+              <button className="main-big-btn" type="submit">
+                Send
+              </button>
+            </form>
+          </div>
         </div>
-        <form id="message-form" onSubmit={e => this.handleSubmit(e)}>
-          <input
-            id="chat-message_input"
-            name="message"
-            placeholder="Message"
-            required
-            autoComplete="off"
-            autoFocus
-          />
-          <button className="main-big-btn" type="submit">
-            Send
-          </button>
-        </form>
       </div>
     );
   }
