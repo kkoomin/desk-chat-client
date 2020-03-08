@@ -5,6 +5,12 @@ import MainPage from "./pages/main.page";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
+// When user closes the browser, it will remove the user cookies
+window.addEventListener("beforeunload", () => {
+  cookies.remove("username");
+  cookies.remove("userId");
+});
+
 class App extends React.Component {
   state = {
     isLoggedIn: false,

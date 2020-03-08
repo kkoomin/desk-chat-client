@@ -2,8 +2,6 @@ import React from "react";
 import API from "../API";
 
 class UserInfo extends React.Component {
-  state = {};
-
   componentDidMount() {
     API.getUser(this.props.username).then(data => {
       this.update_email.value = data.email;
