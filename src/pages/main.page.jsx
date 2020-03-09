@@ -13,7 +13,7 @@ const cookies = new Cookies();
 
 // Socket Client-Side Connection //
 const io = require("socket.io-client");
-const socket = io.connect("http://localhost:8080", {
+const socket = io.connect("http://70.12.225.186:8080", {
   transports: ["websocket"],
   autoConnect: false
 });
