@@ -15,6 +15,7 @@ const cookies = new Cookies();
 // Socket Client-Side Connection //
 // const url = "localhost";
 const url = "70.12.225.186";
+// const url = "210.107.78.153";
 const io = require("socket.io-client");
 const socket = io.connect(`http://${url}:8080`, {
   transports: ["websocket"],
@@ -160,7 +161,7 @@ class MainPage extends React.Component {
     } = this.state;
     return (
       <div className="main-page">
-        <div className="main-title">책상 밑의 핸드폰</div>
+        <header className="main-title">책상 밑의 핸드폰</header>
         <button
           className="userInfo-btn main-big-btn"
           onClick={e => this.handleUserInfo(e)}

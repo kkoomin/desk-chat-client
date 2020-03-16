@@ -40,21 +40,21 @@ class ChatRoom extends React.Component {
               this.messagesBottom = ref;
             }}
           ></div>
-          <div id="message-form">
-            <form onSubmit={e => this.handleSubmit(e)}>
-              <input
-                id="chat-message_input"
-                name="message"
-                placeholder="Message"
-                required
-                autoComplete="off"
-                autoFocus
-              />
-              <button className="main-big-btn" type="submit">
-                Send
-              </button>
-            </form>
-          </div>
+        </div>
+        <div id="message-form">
+          <form onSubmit={e => this.handleSubmit(e)}>
+            <input
+              id="chat-message_input"
+              name="message"
+              placeholder="Message"
+              required
+              autoComplete="off"
+              autoFocus
+            />
+            <button className="main-big-btn" type="submit">
+              Send
+            </button>
+          </form>
         </div>
       </div>
     );

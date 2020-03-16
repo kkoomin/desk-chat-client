@@ -108,6 +108,11 @@ li {
   margin-top: 1rem;
 }
 
+@media only screen and (max-width: 1650px) {
+  .welcome-desc {
+    display: none;
+  }
+}
 .main-title {
   font-family: "Cookie-black", sans-serif;
   font-size: 3rem;
@@ -149,13 +154,14 @@ li {
 .chatroom-wrapper {
   width: 80%;
   margin: auto;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 1fr min-content;
+  grid-gap: 1rem;
 }
 
 .chatroom-container {
-  width: 70%;
   height: auto;
-  /* background-color: blue; */
-  float: left;
 }
 
 .chat-messages {
@@ -169,18 +175,14 @@ li {
 }
 
 #message-form {
-  position: fixed;
-  top: 50rem;
+  /* position: fixed;
+  top: 50rem; */
 }
 /* SideBar */
 .sidebar-container {
-  width: 30%;
   min-height: 20rem;
   height: auto;
-  /* background-color: green; */
   box-shadow: 2px 3px 10px -2px var(--black);
-  /* display: inline-block; */
-  float: right;
 }
 
 .list-user {
@@ -220,7 +222,7 @@ li {
 
 /* Message */
 .message {
-  padding: 0.5rem 5rem;
+  padding: 0.5rem 1rem;
   text-align: left;
 }
 
