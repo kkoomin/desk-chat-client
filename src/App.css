@@ -174,10 +174,6 @@ li {
   display: inline-block;
 }
 
-#message-form {
-  /* position: fixed;
-  top: 50rem; */
-}
 /* SideBar */
 .sidebar-container {
   min-height: 20rem;
