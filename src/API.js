@@ -1,8 +1,8 @@
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
-const url = "http://70.12.225.186:8080";
 // const url = "http://localhost:8080";
+const url = "http://210.107.78.153:8080";
 
 /*
  * USER
