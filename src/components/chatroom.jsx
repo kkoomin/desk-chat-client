@@ -50,6 +50,8 @@ class ChatRoom extends React.Component {
               required
               autoComplete="off"
               autoFocus
+              minLength="1"
+              maxLength="100"
             />
             <button className="main-big-btn" type="submit">
               Send

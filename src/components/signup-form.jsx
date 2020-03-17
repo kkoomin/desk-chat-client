@@ -3,6 +3,8 @@ import API from "../API";
 
 class SignUpForm extends React.Component {
   handleSubmit = e => {
+    // /\A[\w\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i 이메일 레직스
+    // /^[A-Za-z0-9]{4,12}$/ 4-12자리 알파벳, 숫자형 비밀번호 레직스
     API.submitSignUp(e, {
       email: this.signup_email.value,
       password: this.signup_password.value,
@@ -21,6 +23,7 @@ class SignUpForm extends React.Component {
         <form onSubmit={this.handleSubmit} className="signup-form">
           <div className="signup-form_email">
             <input
+              type="email"
               name="email"
               placeholder="Email"
               ref={ref => (this.signup_email = ref)}
@@ -37,9 +40,12 @@ class SignUpForm extends React.Component {
           </div>
           <div className="signup-form_name">
             <input
+              type="text"
               name="name"
               placeholder="Name"
               ref={ref => (this.signup_name = ref)}
+              minLength="4"
+              maxLength="8"
             />
           </div>
 
